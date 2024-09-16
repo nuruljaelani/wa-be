@@ -1,0 +1,37 @@
+services:
+  wa-be:
+    build: .
+    container_name: be
+    restart: always
+    command: npm run dev
+    develop:
+      watch:
+        - path: ./
+          action: sync+restart
+          target: /app/be
+          ignore:
+            - ./node_modules
+    ports:
+      - "3001:3001"
+    networks:
+      - waaps
+
+  wa-fe:
+    build:
+      context: ../wa-fe
+      dockerfile: Dockerfile
+    container_name: fe
+    ports:
+      - "3000:3000"
+    command: npm run dev
+    develop:
+      watch:
+        - path: ../wa-fe
+          action: sync+restart
+          target: /app/fe
+          ignore:
+            - ../wa-fe/node_modules
+    networks:
+      - waaps
+networks:
+  waaps: 
