@@ -1,4 +1,4 @@
-FROM node:lts-slim
+FROM node:lts-slim AS builder
 
 # RUN apt-get update && apt-get install chromium-browser -y
 RUN apt-get update \
@@ -24,10 +24,13 @@ RUN apt-get update \
         libasound2 \
     && rm -rf /var/lib/apt/lists/*
 
-WORKDIR /app/be
-COPY package*.json .
-RUN npm install
+WORKDIR /app
 COPY . .
+RUN npm install
+
+FROM node:lts-slim
+WORKDIR /app/be
+COPY --from=builder /app .
 
 EXPOSE 3001
 CMD ["npm", "run", "dev"]

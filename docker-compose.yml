@@ -1,36 +1,40 @@
 services:
-  wa-be:
+  be:
     build: .
-    container_name: be
+    container_name: express
     restart: always
     command: npm run dev
     develop:
       watch:
         - path: ./
-          action: sync+restart
+          action: sync
           target: /app/be
           ignore:
             - ./node_modules
+        - action: rebuild
+          path: package.json
     ports:
       - "3001:3001"
     networks:
       - waaps
 
-  wa-fe:
+  fe:
     build:
       context: ../wa-fe
       dockerfile: Dockerfile
-    container_name: fe
+    container_name: nextjs
     ports:
       - "3000:3000"
     command: npm run dev
     develop:
       watch:
         - path: ../wa-fe
-          action: sync+restart
+          action: sync
           target: /app/fe
           ignore:
             - ../wa-fe/node_modules
+        - action: rebuild
+          path: ../wa-fe/package.json
     networks:
       - waaps
 networks:
