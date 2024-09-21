@@ -1,18 +1,21 @@
 services:
   be:
     build: .
-    container_name: express
+    container_name: backend
     restart: always
     command: npm run dev
-    develop:
-      watch:
-        - path: ./
-          action: sync
-          target: /app/be
-          ignore:
-            - ./node_modules
-        - action: rebuild
-          path: package.json
+    # develop:
+    #   watch:
+    #     - path: ./
+    #       action: sync
+    #       target: /app/be
+    #       ignore:
+    #         - ./node_modules
+    #     - action: rebuild
+    #       path: package.json
+    volumes:
+      - ./:/app/be
+      - ./node_modules:/app/be/node_modules
     ports:
       - "3001:3001"
     networks:
@@ -22,7 +25,7 @@ services:
     build:
       context: ../wa-fe
       dockerfile: Dockerfile
-    container_name: nextjs
+    container_name: frontend
     ports:
       - "3000:3000"
     command: npm run dev

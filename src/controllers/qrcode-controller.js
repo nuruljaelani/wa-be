@@ -1,12 +1,11 @@
 const { client } = require("../utils/client")
-const qrcode = require('qrcode-terminal')
 const crypto = require('crypto')
 
 const generateQrCode = async (req, res) => {
   const id = crypto.randomBytes(16).toString('hex')
   const cl = client(id)
   cl.on('qr', (qr) => {
-    qrcode.generate(qr, { small: true });
+    console.log('QR RECEIVED', qr);
   });
   cl.on('authenticated', () => {
     console.log('AUTHENTICATED');
