@@ -3,7 +3,7 @@ const { db } = require("../utils/db")
 const bcrypt = require("bcrypt")
 const { generateAccessToken, generateRefreshToken } = require("../utils/auth")
 const jwt = require("jsonwebtoken")
-const expiresIn = 5 * 60
+const expiresIn = 30 * 60
 
 const register = async (req, res) => {
   try {

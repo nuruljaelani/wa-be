@@ -8,7 +8,7 @@ const client = (clientId) => {
     restartOnAuthFail: true,
     puppeteer: {
       headless: true,
-      executablePath: '/usr/bin/chromium-browser',
+      // executablePath: '/usr/bin/chromium-browser',
       args: [
         '--no-sandbox',
         '--disable-setuid-sandbox',
