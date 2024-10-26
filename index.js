@@ -16,15 +16,15 @@ const messageRouter = require("./src/routes/message");
 const authRouter = require("./src/routes/auth");
 const indexRouter = require("./src/routes/index");
 const userRouter = require("./src/routes/user");
+app.get("/", (req, res) => {
+  res.send("Hello World!");
+})
 app.use(authRouter);
 app.use(qrcodeRouter);
 app.use(messageRouter);
 app.use(indexRouter);
 app.use(userRouter);
 
-app.get("/", (req, res) => {
-  res.send("Hello World!!");
-})
 
 io.on('connection', (socket) => {
   console.log('a user connected');
